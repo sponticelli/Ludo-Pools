@@ -1,0 +1,16 @@
+{
+    "name": "Ludo.Pools",
+    "rootNamespace": "",
+    "references": [
+        "GUID:479d1861db65e41fbb90b275073c9b9b"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

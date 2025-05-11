@@ -1,0 +1,23 @@
+{
+  "name": "com.ludo.pools",
+  "version": "1.0.0",
+  "displayName": "Ludo Pools",
+  "description": "A lightweight object pooling system for Unity games to efficiently manage and reuse game objects.",
+  "unity": "2021.3",
+  "documentationUrl": "https://github.com/sponticelli/Ludo-Pools/blob/main/Documentation/README.md",
+  "changelogUrl": "https://github.com/sponticelli/Ludo-Pools/blob/main/CHANGELOG.md",
+  "licensesUrl": "https://github.com/sponticelli/Ludo-Pools/blob/main/LICENSE",
+  "dependencies": {
+  },
+  "keywords": [
+    "ludo",
+    "pool",
+    "object pooling",
+    "performance",
+    "optimization"
+  ],
+  "author": {
+    "name": "Sandro Ponticelli",
+    "url": "https://github.com/sponticelli"
+  }
+}
