@@ -17,18 +17,18 @@
 
 ### Basic Setup
 
-The PoolManager is designed to work with minimal setup. It automatically creates a singleton instance when first accessed:
+The PoolManager is designed to be used with dependency injection. In the Galacron project, it's used with UnityInject:
 
 ```csharp
-// Get the pool manager
-var poolManager = PoolManager.Instance;
-```
-
-For dependency injection scenarios, you can reference the IPoolManager interface:
-
-```csharp
+// Use dependency injection to get the pool manager
 [Inject] private IPoolManager _poolManager;
 ```
+
+This approach offers several advantages:
+- Better testability through interface-based programming
+- Cleaner architecture with proper separation of concerns
+- Easier to mock for unit testing
+- Follows SOLID principles
 
 ## Creating Pools
 
@@ -137,7 +137,7 @@ public class EnemySpawner : MonoBehaviour
         GameObject enemy = _poolManager.GetPooledObject(enemyPrefab);
         enemy.transform.position = position;
         enemy.transform.rotation = Quaternion.identity;
-        
+
         // Initialize enemy state if needed
         var enemyComponent = enemy.GetComponent<Enemy>();
         enemyComponent.Initialize();
@@ -157,7 +157,7 @@ public class EffectsManager : MonoBehaviour
     {
         GameObject explosion = _poolManager.GetPooledObject(explosionPrefab);
         explosion.transform.position = position;
-        
+
         // The explosion prefab should have a ReturnToPoolAfterDelay component
         // that will automatically return it to the pool after the effect finishes
     }
@@ -179,7 +179,7 @@ public class Weapon : MonoBehaviour
         GameObject bullet = _poolManager.GetPooledObject(bulletPrefab);
         bullet.transform.position = firePoint.position;
         bullet.transform.rotation = firePoint.rotation;
-        
+
         // Add velocity to the bullet
         Rigidbody rb = bullet.GetComponent<Rigidbody>();
         if (rb != null)

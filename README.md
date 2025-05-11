@@ -9,6 +9,8 @@ A lightweight object pooling system for Unity games to efficiently manage and re
 - Automatic pool expansion when needed
 - Helper components for common pooling operations
 - Extension methods for GameObject pooling
+- Dependency injection support via IPoolManager interface
+- Comprehensive documentation and examples
 
 ## Installation
 
@@ -25,22 +27,24 @@ A lightweight object pooling system for Unity games to efficiently manage and re
 1. Clone or download this repository
 2. Copy the contents to your Unity project's Assets folder
 
-## Usage
+## Quick Start
 
 ### Basic Usage
 
 ```csharp
-// Get the pool manager
-var poolManager = PoolManager.Instance;
+// Using dependency injection (recommended)
+[Inject] private IPoolManager _poolManager;
 
 // Preload objects (optional)
-poolManager.Preload(prefab, 10);
+_poolManager.CreatePool(prefab, 10, 100);
 
-// Spawn an object from the pool
-GameObject obj = poolManager.Spawn(prefab, position, rotation);
+// Get an object from the pool
+GameObject obj = _poolManager.GetPooledObject(prefab);
+obj.transform.position = position;
+obj.transform.rotation = rotation;
 
 // Return an object to the pool
-poolManager.Return(obj);
+_poolManager.ReturnPooledObject(obj);
 
 // Or use the extension method
 obj.ReturnToPool();
@@ -55,15 +59,49 @@ Add the `ReturnToPoolAfterDelay` component to automatically return an object to 
 var returnComponent = obj.GetComponent<ReturnToPoolAfterDelay>();
 
 // Set the delay
-returnComponent.Delay = 3.0f;
-
-// Start the timer
-returnComponent.StartTimer();
+returnComponent.delay = 3.0f;
 ```
 
 ### Using the ReturnToPoolAction Component
 
-Add the `ReturnToPoolAction` component to return an object to the pool when a specific action occurs.
+Add the `ReturnToPoolAction` component to return an object to the pool when a specific action occurs:
+
+```csharp
+// Get a reference to the component
+var returnAction = obj.GetComponent<ReturnToPoolAction>();
+
+// Call the Execute method to return the object to the pool
+returnAction.Execute();
+
+// Or assign it to a UnityEvent in the inspector
+```
+
+## Documentation
+
+Comprehensive documentation is available in the Documentation folder:
+
+- [API Documentation](Documentation/API-Documentation.md) - Detailed API reference
+- [Architecture](Documentation/Architecture.md) - Overview of the system architecture
+- [Usage Guide](Documentation/Usage-Guide.md) - In-depth usage instructions
+- [Examples](Documentation/Examples.md) - Code examples for common scenarios
+- [Patterns & Anti-Patterns](Documentation/Patterns-Antipatterns.md) - Best practices and things to avoid
+
+## Integration
+
+Ludo Pools is designed to integrate seamlessly with other systems:
+
+- **Dependency Injection**: Use the IPoolManager interface for easy injection
+- **Event Systems**: Works with any event system through the ReturnToPoolAction component
+- **Animation**: Can be triggered via Animation Events
+- **UI**: Can be triggered via UI events
+- **Particle Systems**: Ideal for managing particle effects
+
+## Performance Considerations
+
+- Preload pools for frequently used objects to avoid runtime allocations
+- Choose appropriate initial and maximum pool sizes
+- Cache component references to avoid GetComponent calls
+- Return objects to the pool instead of destroying them
 
 ## License
 

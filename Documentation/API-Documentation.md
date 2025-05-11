@@ -6,9 +6,13 @@
 
 The `PoolManager` is the central class that manages all object pools. It implements the `IPoolManager` interface.
 
-#### Properties
+#### Integration with Dependency Injection
 
-- `Instance`: Static singleton instance of the PoolManager.
+The PoolManager is designed to be used with dependency injection. In the Galacron project, it's used with UnityInject:
+
+```csharp
+[Inject] private IPoolManager _poolManager;
+```
 
 #### Methods
 
@@ -23,17 +27,17 @@ The `PoolManager` is the central class that manages all object pools. It impleme
 #### Example
 
 ```csharp
-// Get the pool manager
-var poolManager = PoolManager.Instance;
+// Using dependency injection
+[Inject] private IPoolManager _poolManager;
 
 // Create a pool with 10 initial objects and a maximum of 100
-poolManager.CreatePool(myPrefab, 10, 100);
+_poolManager.CreatePool(myPrefab, 10, 100);
 
 // Get an object from the pool
-GameObject obj = poolManager.GetPooledObject(myPrefab);
+GameObject obj = _poolManager.GetPooledObject(myPrefab);
 
 // Return the object to the pool
-poolManager.ReturnPooledObject(myPrefab, obj);
+_poolManager.ReturnPooledObject(myPrefab, obj);
 ```
 
 ### IPoolManager
